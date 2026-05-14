@@ -88,10 +88,12 @@ export default function RekapBulananPage() {
             {KELAS_LIST.map((k) => <option key={k} value={k}>{k}</option>)}
           </select>
         </div>
-        <div className="form-group" style={{ alignSelf: 'flex-end' }}><button className="btn btn-success" onClick={handleExport}><Download size={16} /> Export Excel</button></div>
+        <div className="form-group">
+          <button className="btn btn-success" onClick={handleExport} style={{ width: '100%' }}><Download size={16} /> Export Excel</button>
+        </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: 16, marginBottom: 24 }}>
+      <div className="rekap-bulanan-grid">
         <div className="stat-cards-grid" style={{ alignContent: 'start' }}>
           <div className="stat-card green"><div className="stat-card-icon" style={{ background: 'var(--success-light)', color: 'var(--success)' }}>H</div><div className="stat-card-info"><h4>Total Hadir</h4><div className="stat-value">{totals.hadir}</div></div></div>
           <div className="stat-card blue"><div className="stat-card-icon" style={{ background: 'var(--info-light)', color: 'var(--info)' }}>I</div><div className="stat-card-info"><h4>Total Izin</h4><div className="stat-value">{totals.izin}</div></div></div>

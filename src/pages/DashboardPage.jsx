@@ -114,8 +114,8 @@ export default function DashboardPage() {
       </button>
 
       {/* Chart + Recent Table */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-        <div className="card" style={{ gridColumn: window.innerWidth < 768 ? '1 / -1' : undefined }}>
+      <div className="dashboard-grid">
+        <div className="card">
           <div className="card-header">
             <h3>Kehadiran 7 Hari Terakhir</h3>
           </div>
@@ -126,7 +126,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="card" style={{ gridColumn: window.innerWidth < 768 ? '1 / -1' : undefined }}>
+        <div className="card">
           <div className="card-header">
             <h3>Absensi Hari Ini</h3>
             <span className="badge badge-hadir">{stats.absensiHariIni.length} tercatat</span>

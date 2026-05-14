@@ -13,12 +13,17 @@
   margin-left: var(--sidebar-width);
   min-height: 100vh;
   transition: margin-left var(--transition-normal);
+  /* Prevent content from overflowing */
+  min-width: 0;
+  overflow-x: hidden;
 }
 
 .page-wrapper {
   padding: var(--space-lg);
   max-width: 1400px;
   animation: fadeIn 0.3s ease;
+  /* Ensure no horizontal overflow */
+  width: 100%;
 }
 
 .page-header {
@@ -300,6 +305,8 @@
 }
 
 /* ---- Responsive ---- */
+
+/* Tablet: Collapsed sidebar */
 @media (max-width: 1023px) {
   .sidebar {
     width: var(--sidebar-collapsed);
@@ -326,6 +333,7 @@
   }
 }
 
+/* Mobile: Full overlay sidebar */
 @media (max-width: 767px) {
   .sidebar {
     width: var(--sidebar-width);
@@ -363,5 +371,24 @@
 
   .page-wrapper {
     padding: var(--space-md);
+  }
+
+  .page-header h1 {
+    font-size: 1.3rem;
+  }
+
+  .page-header p {
+    font-size: 0.82rem;
+  }
+
+  /* Login responsive */
+  .login-card {
+    padding: var(--space-lg);
+    margin: var(--space-sm);
+  }
+
+  .login-logo-icon {
+    width: 60px;
+    height: 60px;
   }
 }

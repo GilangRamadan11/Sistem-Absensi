@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { GraduationCap, Eye, EyeOff } from 'lucide-react';
 
@@ -12,25 +12,28 @@ export default function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
     if (!username.trim() || !password.trim()) {
-      setError('Username dan password harus diisi!');
+      setError('Email/Username dan password harus diisi!');
       return;
     }
 
     setLoading(true);
-    setTimeout(() => {
-      const result = login(username, password);
+    try {
+      const result = await login(username, password);
       if (result.success) {
         navigate('/dashboard');
       } else {
         setError(result.message);
       }
+    } catch (err) {
+      setError('Terjadi kesalahan pada sistem');
+    } finally {
       setLoading(false);
-    }, 500);
+    }
   };
 
   return (
@@ -46,11 +49,11 @@ export default function LoginPage() {
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label className="form-label">Username</label>
+            <label className="form-label">Email / Username</label>
             <input
               className="form-input"
               type="text"
-              placeholder="Masukkan username"
+              placeholder="Masukkan email atau nama"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               autoFocus
@@ -99,9 +102,9 @@ export default function LoginPage() {
             {loading ? 'Memproses...' : 'Masuk'}
           </button>
 
-          <p style={{ textAlign: 'center', marginTop: 20, fontSize: '0.78rem', color: 'var(--text-light)' }}>
-            Demo: guru / guru123
-          </p>
+          <div style={{ textAlign: 'center', marginTop: 20, fontSize: '0.85rem', color: 'var(--text-light)' }}>
+            Belum punya akun? <Link to="/register" style={{ color: 'var(--primary)', fontWeight: '600', textDecoration: 'none' }}>Daftar di sini</Link>
+          </div>
         </form>
       </div>
     </div>

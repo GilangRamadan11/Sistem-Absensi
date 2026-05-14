@@ -76,7 +76,9 @@ export default function RekapMingguanPage() {
             {KELAS_LIST.map((k) => <option key={k} value={k}>{k}</option>)}
           </select>
         </div>
-        <div className="form-group" style={{ alignSelf: 'flex-end' }}><button className="btn btn-success" onClick={handleExport}><Download size={16} /> Export Excel</button></div>
+        <div className="form-group">
+          <button className="btn btn-success" onClick={handleExport} style={{ width: '100%' }}><Download size={16} /> Export Excel</button>
+        </div>
       </div>
 
       <div className="card" style={{ marginBottom: 24 }}>

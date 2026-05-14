@@ -1,6 +1,14 @@
 // Dummy data & constants for Sistem Absensi SDN 128 Haurpancuh
 
-export const KELAS_LIST = ['Kelas 1', 'Kelas 2', 'Kelas 3', 'Kelas 4', 'Kelas 5', 'Kelas 6'];
+// Daftar kelas: satu sumber data untuk seluruh aplikasi
+export const KELAS_LIST = [
+  '1A', '1B', '1C', '1D',
+  '2A', '2B', '2C', '2D',
+  '3A', '3B', '3C', '3D',
+  '4A', '4B', '4C', '4D',
+  '5A', '5B', '5C', '5D',
+  '6A', '6B', '6C', '6D',
+];
 
 export const STATUS_LIST = ['Hadir', 'Izin', 'Sakit', 'Alpha'];
 
@@ -14,30 +22,30 @@ export const STATUS_COLORS = {
 export const HARI_SEKOLAH = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
 
 export const DUMMY_SISWA = [
-  { id: 1, nama: 'Ahmad Fauzi', nis: '20240001', kelas: 'Kelas 1', foto: null },
-  { id: 2, nama: 'Siti Nurhaliza', nis: '20240002', kelas: 'Kelas 1', foto: null },
-  { id: 3, nama: 'Budi Santoso', nis: '20240003', kelas: 'Kelas 2', foto: null },
-  { id: 4, nama: 'Rina Wulandari', nis: '20240004', kelas: 'Kelas 2', foto: null },
-  { id: 5, nama: 'Dimas Prasetyo', nis: '20240005', kelas: 'Kelas 3', foto: null },
-  { id: 6, nama: 'Anisa Rahma', nis: '20240006', kelas: 'Kelas 3', foto: null },
-  { id: 7, nama: 'Rizki Ramadhan', nis: '20240007', kelas: 'Kelas 4', foto: null },
-  { id: 8, nama: 'Dewi Lestari', nis: '20240008', kelas: 'Kelas 4', foto: null },
-  { id: 9, nama: 'Fajar Nugroho', nis: '20240009', kelas: 'Kelas 5', foto: null },
-  { id: 10, nama: 'Putri Ayu', nis: '20240010', kelas: 'Kelas 5', foto: null },
-  { id: 11, nama: 'Hendra Wijaya', nis: '20240011', kelas: 'Kelas 6', foto: null },
-  { id: 12, nama: 'Lina Marlina', nis: '20240012', kelas: 'Kelas 6', foto: null },
-  { id: 13, nama: 'Andi Saputra', nis: '20240013', kelas: 'Kelas 1', foto: null },
-  { id: 14, nama: 'Mega Puspita', nis: '20240014', kelas: 'Kelas 2', foto: null },
-  { id: 15, nama: 'Yusuf Hakim', nis: '20240015', kelas: 'Kelas 3', foto: null },
-  { id: 16, nama: 'Nur Aisyah', nis: '20240016', kelas: 'Kelas 4', foto: null },
-  { id: 17, nama: 'Rendi Kurniawan', nis: '20240017', kelas: 'Kelas 5', foto: null },
-  { id: 18, nama: 'Citra Dewi', nis: '20240018', kelas: 'Kelas 6', foto: null },
-  { id: 19, nama: 'Bagus Setiawan', nis: '20240019', kelas: 'Kelas 1', foto: null },
-  { id: 20, nama: 'Wulan Sari', nis: '20240020', kelas: 'Kelas 2', foto: null },
-  { id: 21, nama: 'Taufik Hidayat', nis: '20240021', kelas: 'Kelas 3', foto: null },
-  { id: 22, nama: 'Sri Wahyuni', nis: '20240022', kelas: 'Kelas 4', foto: null },
-  { id: 23, nama: 'Gilang Ramadhan', nis: '20240023', kelas: 'Kelas 5', foto: null },
-  { id: 24, nama: 'Indah Permata', nis: '20240024', kelas: 'Kelas 6', foto: null },
+  { id: 1, nama: 'Ahmad Fauzi', nis: '20240001', kelas: '1A', foto: null },
+  { id: 2, nama: 'Siti Nurhaliza', nis: '20240002', kelas: '1B', foto: null },
+  { id: 3, nama: 'Budi Santoso', nis: '20240003', kelas: '2A', foto: null },
+  { id: 4, nama: 'Rina Wulandari', nis: '20240004', kelas: '2B', foto: null },
+  { id: 5, nama: 'Dimas Prasetyo', nis: '20240005', kelas: '3A', foto: null },
+  { id: 6, nama: 'Anisa Rahma', nis: '20240006', kelas: '3B', foto: null },
+  { id: 7, nama: 'Rizki Ramadhan', nis: '20240007', kelas: '4A', foto: null },
+  { id: 8, nama: 'Dewi Lestari', nis: '20240008', kelas: '4B', foto: null },
+  { id: 9, nama: 'Fajar Nugroho', nis: '20240009', kelas: '5A', foto: null },
+  { id: 10, nama: 'Putri Ayu', nis: '20240010', kelas: '5B', foto: null },
+  { id: 11, nama: 'Hendra Wijaya', nis: '20240011', kelas: '6A', foto: null },
+  { id: 12, nama: 'Lina Marlina', nis: '20240012', kelas: '6B', foto: null },
+  { id: 13, nama: 'Andi Saputra', nis: '20240013', kelas: '1C', foto: null },
+  { id: 14, nama: 'Mega Puspita', nis: '20240014', kelas: '2C', foto: null },
+  { id: 15, nama: 'Yusuf Hakim', nis: '20240015', kelas: '3C', foto: null },
+  { id: 16, nama: 'Nur Aisyah', nis: '20240016', kelas: '4C', foto: null },
+  { id: 17, nama: 'Rendi Kurniawan', nis: '20240017', kelas: '5C', foto: null },
+  { id: 18, nama: 'Citra Dewi', nis: '20240018', kelas: '6C', foto: null },
+  { id: 19, nama: 'Bagus Setiawan', nis: '20240019', kelas: '1D', foto: null },
+  { id: 20, nama: 'Wulan Sari', nis: '20240020', kelas: '2D', foto: null },
+  { id: 21, nama: 'Taufik Hidayat', nis: '20240021', kelas: '3D', foto: null },
+  { id: 22, nama: 'Sri Wahyuni', nis: '20240022', kelas: '4D', foto: null },
+  { id: 23, nama: 'Gilang Ramadhan', nis: '20240023', kelas: '5D', foto: null },
+  { id: 24, nama: 'Indah Permata', nis: '20240024', kelas: '6D', foto: null },
 ];
 
 // Generate dummy absensi for the past 30 days

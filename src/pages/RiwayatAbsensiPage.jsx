@@ -9,7 +9,7 @@ export default function RiwayatAbsensiPage() {
   const { siswaList, absensiList, addAbsensi, updateAbsensiStatus } = useData();
   const { addToast } = useToast();
   const [tanggal, setTanggal] = useState(getTodayStr());
-  const [filterKelas, setFilterKelas] = useState('Kelas 1'); // Default to Kelas 1
+  const [filterKelas, setFilterKelas] = useState('1A'); // Default to Kelas 1A
   const [search, setSearch] = useState('');
 
   // Get attendance records for the selected date
@@ -83,7 +83,7 @@ export default function RiwayatAbsensiPage() {
             {KELAS_LIST.map((k) => <option key={k} value={k}>{k}</option>)}
           </select>
         </div>
-        <div className="form-group" style={{ flex: 1 }}>
+        <div className="form-group">
           <label className="form-label">Cari</label>
           <div className="search-bar">
             <Search size={18} />
@@ -93,9 +93,9 @@ export default function RiwayatAbsensiPage() {
       </div>
 
       <div className="card">
-        <div className="card-header" style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
+        <div className="card-header">
           <h3>Data Kehadiran</h3>
-          <div style={{ display: 'flex', gap: 8 }}>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             <span className="badge badge-izin">Total: {mappedData.length}</span>
             <span className="badge badge-hadir">Sudah Absen: {sudahAbsenCount}</span>
             <span className="badge" style={{ background: '#f1f5f9', color: '#64748b' }}>Belum: {mappedData.length - sudahAbsenCount}</span>

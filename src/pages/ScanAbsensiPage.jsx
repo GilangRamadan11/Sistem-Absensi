@@ -68,7 +68,7 @@ export default function ScanAbsensiPage() {
         <h1>Scan Absensi</h1>
         <p>Pindai QR Code siswa untuk mencatat kehadiran</p>
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(280px,480px) 1fr', gap: 24, alignItems: 'start' }}>
+      <div className="scan-layout">
         <div>
           <div className="card" style={{ marginBottom: 16 }}>
             <div className="card-body" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

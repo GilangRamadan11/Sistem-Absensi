@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import LogoutModal from '../common/LogoutModal';
 import {
   LayoutDashboard,
   ScanLine,
@@ -21,14 +23,17 @@ const menuItems = [
 ];
 
 export default function Sidebar({ isOpen, onClose }) {
-  
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const { logout } = useAuth();
   const location = useLocation();
 
   const handleLogout = () => {
-    if (window.confirm('Yakin ingin keluar?')) {
-      logout();
-    }
+    setIsLogoutModalOpen(true);
+  };
+
+  const confirmLogout = () => {
+    setIsLogoutModalOpen(false);
+    logout();
   };
 
   return (
@@ -72,6 +77,12 @@ export default function Sidebar({ isOpen, onClose }) {
           </button>
         </div>
       </aside>
+
+      <LogoutModal 
+        isOpen={isLogoutModalOpen} 
+        onClose={() => setIsLogoutModalOpen(false)} 
+        onConfirm={confirmLogout} 
+      />
     </>
   );
 }

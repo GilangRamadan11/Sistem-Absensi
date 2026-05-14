@@ -15,14 +15,24 @@ export function AuthProvider({ children }) {
     setLoading(false);
   }, []);
 
-  const login = (username, password) => {
-    if (username === GURU_CREDENTIALS.username && password === GURU_CREDENTIALS.password) {
-      const userData = { username, nama: GURU_CREDENTIALS.nama };
-      setUser(userData);
-      localStorage.setItem('absensi_user', JSON.stringify(userData));
-      return { success: true };
+  const login = async (identifier, password) => {
+    try {
+      const res = await fetch('http://localhost:5000/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ identifier, password })
+      });
+      const data = await res.json();
+      
+      if (res.ok && data.success) {
+        setUser(data.user);
+        localStorage.setItem('absensi_user', JSON.stringify(data.user));
+        return { success: true };
+      }
+      return { success: false, message: data.message || 'Username atau password salah!' };
+    } catch (error) {
+      return { success: false, message: 'Tidak dapat menghubungi server' };
     }
-    return { success: false, message: 'Username atau password salah!' };
   };
 
   const logout = () => {

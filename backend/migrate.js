@@ -14,7 +14,7 @@ async function runMigration() {
     console.log('Menambahkan kolom tahun_ajaran ke tabel siswa...');
     await connection.query(`
       ALTER TABLE siswa 
-      ADD COLUMN tahun_ajaran VARCHAR(20) DEFAULT '2024/2025'
+      ADD COLUMN tahun_ajaran VARCHAR(20) DEFAULT '2025/2026'
     `);
     
     console.log('Migrasi berhasil!');

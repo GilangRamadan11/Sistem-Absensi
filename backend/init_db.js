@@ -28,6 +28,17 @@ async function initDB() {
       )
     `);
 
+    console.log('Membuat tabel users...');
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS users (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        nama VARCHAR(100) NOT NULL,
+        email VARCHAR(100) NOT NULL UNIQUE,
+        password VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
     console.log('Membuat tabel absensi...');
     await connection.query(`
       CREATE TABLE IF NOT EXISTS absensi (
@@ -48,30 +59,30 @@ async function initDB() {
     if (rows[0].count === 0) {
       console.log('Memasukkan data dummy siswa...');
       const dummySiswa = [
-        ['Ahmad Fauzi', '20240001', 'Kelas 1'],
-        ['Siti Nurhaliza', '20240002', 'Kelas 1'],
-        ['Budi Santoso', '20240003', 'Kelas 2'],
-        ['Rina Wulandari', '20240004', 'Kelas 2'],
-        ['Dimas Prasetyo', '20240005', 'Kelas 3'],
-        ['Anisa Rahma', '20240006', 'Kelas 3'],
-        ['Rizki Ramadhan', '20240007', 'Kelas 4'],
-        ['Dewi Lestari', '20240008', 'Kelas 4'],
-        ['Fajar Nugroho', '20240009', 'Kelas 5'],
-        ['Putri Ayu', '20240010', 'Kelas 5'],
-        ['Hendra Wijaya', '20240011', 'Kelas 6'],
-        ['Lina Marlina', '20240012', 'Kelas 6'],
-        ['Andi Saputra', '20240013', 'Kelas 1'],
-        ['Mega Puspita', '20240014', 'Kelas 2'],
-        ['Yusuf Hakim', '20240015', 'Kelas 3'],
-        ['Nur Aisyah', '20240016', 'Kelas 4'],
-        ['Rendi Kurniawan', '20240017', 'Kelas 5'],
-        ['Citra Dewi', '20240018', 'Kelas 6'],
-        ['Bagus Setiawan', '20240019', 'Kelas 1'],
-        ['Wulan Sari', '20240020', 'Kelas 2'],
-        ['Taufik Hidayat', '20240021', 'Kelas 3'],
-        ['Sri Wahyuni', '20240022', 'Kelas 4'],
-        ['Gilang Ramadhan', '20240023', 'Kelas 5'],
-        ['Indah Permata', '20240024', 'Kelas 6']
+        ['Ahmad Fauzi', '20240001', '1A'],
+        ['Siti Nurhaliza', '20240002', '1B'],
+        ['Budi Santoso', '20240003', '2A'],
+        ['Rina Wulandari', '20240004', '2B'],
+        ['Dimas Prasetyo', '20240005', '3A'],
+        ['Anisa Rahma', '20240006', '3B'],
+        ['Rizki Ramadhan', '20240007', '4A'],
+        ['Dewi Lestari', '20240008', '4B'],
+        ['Fajar Nugroho', '20240009', '5A'],
+        ['Putri Ayu', '20240010', '5B'],
+        ['Hendra Wijaya', '20240011', '6A'],
+        ['Lina Marlina', '20240012', '6B'],
+        ['Andi Saputra', '20240013', '1C'],
+        ['Mega Puspita', '20240014', '2C'],
+        ['Yusuf Hakim', '20240015', '3C'],
+        ['Nur Aisyah', '20240016', '4C'],
+        ['Rendi Kurniawan', '20240017', '5C'],
+        ['Citra Dewi', '20240018', '6C'],
+        ['Bagus Setiawan', '20240019', '1D'],
+        ['Wulan Sari', '20240020', '2D'],
+        ['Taufik Hidayat', '20240021', '3D'],
+        ['Sri Wahyuni', '20240022', '4D'],
+        ['Gilang Ramadhan', '20240023', '5D'],
+        ['Indah Permata', '20240024', '6D']
       ];
 
       for (const siswa of dummySiswa) {

@@ -11,6 +11,7 @@ import DataSiswaPage from './pages/DataSiswaPage';
 import RiwayatAbsensiPage from './pages/RiwayatAbsensiPage';
 import RekapMingguanPage from './pages/RekapMingguanPage';
 import RekapBulananPage from './pages/RekapBulananPage';
+import RegisterPage from './pages/RegisterPage';
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
           <DataProvider>
             <Routes>
               <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
               <Route
                 path="/"
                 element={

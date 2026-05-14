@@ -6,7 +6,14 @@ import { QRCodeSVG } from 'qrcode.react';
 import { Plus, Search, Edit2, Trash2, QrCode, X, Download, Upload, FileSpreadsheet } from 'lucide-react';
 import * as XLSX from 'xlsx';
 
-const TAHUN_AJARAN_LIST = ['2024/2025', '2025/2026'];
+const TAHUN_AJARAN_LIST = [
+  '2025/2026',
+  '2026/2027',
+  '2027/2028',
+  '2028/2029',
+  '2029/2030',
+  '2030/2031'
+];
 
 export default function DataSiswaPage() {
   const { siswaList, addSiswa, updateSiswa, deleteSiswa, uploadSiswaBulk } = useData();
@@ -14,17 +21,17 @@ export default function DataSiswaPage() {
 
   const [search, setSearch] = useState('');
   const [filterKelas, setFilterKelas] = useState('');
-  const [filterTahunAjaran, setFilterTahunAjaran] = useState('2024/2025'); // Default filter
+  const [filterTahunAjaran, setFilterTahunAjaran] = useState('2025/2026'); // Default filter
 
   const [showModal, setShowModal] = useState(false);
   const [showQR, setShowQR] = useState(null);
   const [showImport, setShowImport] = useState(false);
   const [editData, setEditData] = useState(null);
 
-  const [form, setForm] = useState({ nama: '', nis: '', kelas: 'Kelas 1', tahun_ajaran: '2024/2025' });
+  const [form, setForm] = useState({ nama: '', nis: '', kelas: '1A', tahun_ajaran: '2025/2026' });
   const [deleteConfirm, setDeleteConfirm] = useState(null);
 
-  const [importForm, setImportForm] = useState({ file: null, kelas: 'Kelas 1', tahun_ajaran: '2024/2025' });
+  const [importForm, setImportForm] = useState({ file: null, kelas: '1A', tahun_ajaran: '2025/2026' });
 
   const filtered = siswaList.filter((s) => {
     const matchSearch = s.nama.toLowerCase().includes(search.toLowerCase()) || s.nis.includes(search);
@@ -33,8 +40,8 @@ export default function DataSiswaPage() {
     return matchSearch && matchKelas && matchTahun;
   });
 
-  const openAdd = () => { setEditData(null); setForm({ nama: '', nis: '', kelas: 'Kelas 1', tahun_ajaran: filterTahunAjaran !== 'Semua Tahun' ? filterTahunAjaran : '2024/2025' }); setShowModal(true); };
-  const openEdit = (s) => { setEditData(s); setForm({ nama: s.nama, nis: s.nis, kelas: s.kelas, tahun_ajaran: s.tahun_ajaran || '2024/2025' }); setShowModal(true); };
+  const openAdd = () => { setEditData(null); setForm({ nama: '', nis: '', kelas: '1A', tahun_ajaran: filterTahunAjaran !== 'Semua Tahun' ? filterTahunAjaran : '2025/2026' }); setShowModal(true); };
+  const openEdit = (s) => { setEditData(s); setForm({ nama: s.nama, nis: s.nis, kelas: s.kelas, tahun_ajaran: s.tahun_ajaran || '2025/2026' }); setShowModal(true); };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -140,7 +147,7 @@ export default function DataSiswaPage() {
         }
 
         setShowImport(false);
-        setImportForm({ file: null, kelas: 'Kelas 1', tahun_ajaran: '2024/2025' });
+        setImportForm({ file: null, kelas: '1A', tahun_ajaran: '2025/2026' });
       } catch (err) {
         addToast('Gagal memproses file. Pastikan formatnya .xlsx', 'error');
       }
@@ -155,14 +162,14 @@ export default function DataSiswaPage() {
         <div className="toolbar-left" style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
           <div>
             <label className="form-label">Tahun Ajaran</label>
-            <select className="form-select" style={{ width: 140 }} value={filterTahunAjaran} onChange={(e) => setFilterTahunAjaran(e.target.value)}>
+            <select className="form-select" value={filterTahunAjaran} onChange={(e) => setFilterTahunAjaran(e.target.value)}>
               <option value="Semua Tahun">Semua Tahun</option>
               {TAHUN_AJARAN_LIST.map((t) => <option key={t} value={t}>{t}</option>)}
             </select>
           </div>
           <div>
             <label className="form-label">Kelas</label>
-            <select className="form-select" style={{ width: 140 }} value={filterKelas} onChange={(e) => setFilterKelas(e.target.value)}>
+            <select className="form-select" value={filterKelas} onChange={(e) => setFilterKelas(e.target.value)}>
               <option value="">Semua Kelas</option>
               {KELAS_LIST.map((k) => <option key={k} value={k}>{k}</option>)}
             </select>
@@ -215,7 +222,7 @@ export default function DataSiswaPage() {
               <div className="modal-body">
                 <div className="form-group"><label className="form-label">Nama Lengkap</label><input className="form-input" value={form.nama} onChange={(e) => setForm({ ...form, nama: e.target.value })} placeholder="Nama siswa" /></div>
                 <div className="form-group"><label className="form-label">NIS</label><input className="form-input" value={form.nis} onChange={(e) => setForm({ ...form, nis: e.target.value })} placeholder="Nomor Induk Siswa" /></div>
-                <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                <div className="form-group modal-form-grid">
                   <div>
                     <label className="form-label">Kelas</label>
                     <select className="form-select" value={form.kelas} onChange={(e) => setForm({ ...form, kelas: e.target.value })}>{KELAS_LIST.map((k) => <option key={k} value={k}>{k}</option>)}</select>
@@ -259,7 +266,7 @@ export default function DataSiswaPage() {
                   <input type="file" accept=".xlsx, .xls" className="form-input" style={{ padding: '8px' }} onChange={(e) => setImportForm({ ...importForm, file: e.target.files[0] })} />
                 </div>
 
-                <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                <div className="form-group modal-form-grid">
                   <div>
                     <label className="form-label">Terapkan ke Kelas</label>
                     <select className="form-select" value={importForm.kelas} onChange={(e) => setImportForm({ ...importForm, kelas: e.target.value })}>

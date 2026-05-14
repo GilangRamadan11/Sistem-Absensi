@@ -11,6 +11,58 @@ app.use(express.json());
 
 // Helper function to get today's date string (YYYY-MM-DD)
 const getTodayStr = () => new Date().toISOString().split('T')[0];
+const bcrypt = require('bcryptjs');
+
+// ==========================================
+// AUTH ROUTES
+// ==========================================
+
+app.post('/api/auth/register', async (req, res) => {
+  const { nama, email, password } = req.body;
+  
+  try {
+    const [existing] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
+    if (existing.length > 0) {
+      return res.status(400).json({ success: false, message: 'Email sudah terdaftar' });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    await db.query(
+      'INSERT INTO users (nama, email, password) VALUES (?, ?, ?)',
+      [nama, email, hashedPassword]
+    );
+
+    res.status(201).json({ success: true, message: 'Registrasi berhasil' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Terjadi kesalahan pada server' });
+  }
+});
+
+app.post('/api/auth/login', async (req, res) => {
+  const { identifier, password } = req.body;
+  try {
+    const [users] = await db.query('SELECT * FROM users WHERE email = ? OR nama = ?', [identifier, identifier]);
+    if (users.length === 0) {
+      return res.status(401).json({ success: false, message: 'Email atau Username tidak terdaftar' });
+    }
+    
+    const user = users[0];
+    const isMatch = await bcrypt.compare(password, user.password);
+    
+    if (!isMatch) {
+      return res.status(401).json({ success: false, message: 'Password salah' });
+    }
+    
+    const userData = { id: user.id, nama: user.nama, email: user.email };
+    res.json({ success: true, user: userData, message: 'Login berhasil' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Terjadi kesalahan pada server' });
+  }
+});
 
 // ==========================================
 // SISWA ROUTES
@@ -29,7 +81,7 @@ app.get('/api/siswa', async (req, res) => {
 
 // Add new siswa
 app.post('/api/siswa', async (req, res) => {
-  const { nama, nis, kelas, tahun_ajaran = '2024/2025' } = req.body;
+  const { nama, nis, kelas, tahun_ajaran = '2025/2026' } = req.body;
   try {
     const [result] = await db.query(
       'INSERT INTO siswa (nama, nis, kelas, tahun_ajaran) VALUES (?, ?, ?, ?)',
@@ -70,7 +122,7 @@ app.post('/api/siswa/bulk', async (req, res) => {
   }
 
   try {
-    const values = students.map(s => [s.nama, s.nis, s.kelas, s.tahun_ajaran || '2024/2025']);
+    const values = students.map(s => [s.nama, s.nis, s.kelas, s.tahun_ajaran || '2025/2026']);
     
     const sql = `
       INSERT INTO siswa (nama, nis, kelas, tahun_ajaran) 

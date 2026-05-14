@@ -88,6 +88,8 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Prevent text size adjust on orientation change on iOS */
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -96,10 +98,12 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 #root {
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 a {
@@ -129,6 +133,8 @@ input, select, textarea {
   font-family: inherit;
   border: none;
   outline: none;
+  /* Prevent zoom on focus on iOS */
+  font-size: 16px;
 }
 
 table {
@@ -249,3 +255,15 @@ p {
 .gap-1 { gap: var(--space-sm); }
 .gap-2 { gap: var(--space-md); }
 .gap-3 { gap: var(--space-lg); }
+
+/* ---- Responsive Typography ---- */
+@media (max-width: 767px) {
+  html {
+    font-size: 15px;
+  }
+
+  h1 { font-size: 1.4rem; }
+  h2 { font-size: 1.25rem; }
+  h3 { font-size: 1.1rem; }
+  h4 { font-size: 1rem; }
+}
