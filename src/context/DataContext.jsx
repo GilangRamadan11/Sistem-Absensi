@@ -6,7 +6,7 @@ import { useToast } from './ToastContext';
 const DataContext = createContext(null);
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api'
+  baseURL: '/api'
 });
 
 export function DataProvider({ children }) {

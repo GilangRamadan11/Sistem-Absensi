@@ -72,19 +72,120 @@ export default function DataSiswaPage() {
     const svg = document.getElementById(`qr-${siswa.nis}`);
     if (!svg) return;
     const svgData = new XMLSerializer().serializeToString(svg);
+    
+    const cardWidth = 400;
+    const cardHeight = 560;
+    const scale = 2; // High-res for print
     const canvas = document.createElement('canvas');
-    canvas.width = 256; canvas.height = 256;
+    canvas.width = cardWidth * scale;
+    canvas.height = cardHeight * scale;
     const ctx = canvas.getContext('2d');
-    const img = new Image();
-    img.onload = () => {
-      ctx.fillStyle = 'white'; ctx.fillRect(0, 0, 256, 256);
-      ctx.drawImage(img, 0, 0, 256, 256);
+    ctx.scale(scale, scale);
+
+    // --- Background ---
+    ctx.fillStyle = '#FFFFFF';
+    ctx.beginPath();
+    ctx.roundRect(0, 0, cardWidth, cardHeight, 16);
+    ctx.fill();
+
+    // --- Header gradient bar ---
+    const headerH = 90;
+    const grad = ctx.createLinearGradient(0, 0, cardWidth, 0);
+    grad.addColorStop(0, '#1E3A5F');
+    grad.addColorStop(1, '#4A90D9');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.roundRect(0, 0, cardWidth, headerH, [16, 16, 0, 0]);
+    ctx.fill();
+
+    // --- School name ---
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = '600 13px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('KARTU IDENTITAS SISWA', cardWidth / 2, 32);
+    ctx.font = '700 17px Inter, sans-serif';
+    ctx.fillText('SDN 128 Haurpancuh', cardWidth / 2, 56);
+    ctx.font = '400 11px Inter, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.8)';
+    ctx.fillText('Sistem Absensi Digital', cardWidth / 2, 76);
+
+    // --- QR Code area ---
+    const qrSize = 200;
+    const qrX = (cardWidth - qrSize) / 2;
+    const qrY = headerH + 30;
+
+    // QR frame with subtle shadow
+    ctx.shadowColor = 'rgba(0,0,0,0.1)';
+    ctx.shadowBlur = 16;
+    ctx.shadowOffsetY = 4;
+    ctx.fillStyle = '#FFFFFF';
+    ctx.beginPath();
+    ctx.roundRect(qrX - 12, qrY - 12, qrSize + 24, qrSize + 24, 12);
+    ctx.fill();
+    ctx.shadowColor = 'transparent';
+    ctx.shadowBlur = 0;
+    ctx.shadowOffsetY = 0;
+
+    // QR border
+    ctx.strokeStyle = '#E2E8F0';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.roundRect(qrX - 12, qrY - 12, qrSize + 24, qrSize + 24, 12);
+    ctx.stroke();
+
+    // --- Info section ---
+    const infoY = qrY + qrSize + 40;
+
+    // Divider line
+    ctx.strokeStyle = '#E2E8F0';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(40, infoY - 16);
+    ctx.lineTo(cardWidth - 40, infoY - 16);
+    ctx.stroke();
+
+    // Student name
+    ctx.fillStyle = '#2C3E50';
+    ctx.font = '700 18px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(siswa.nama, cardWidth / 2, infoY + 6);
+
+    // NIS
+    ctx.fillStyle = '#7F8C8D';
+    ctx.font = '500 13px Inter, sans-serif';
+    ctx.fillText(`NIS: ${siswa.nis}`, cardWidth / 2, infoY + 30);
+
+    // Class badge
+    const badgeText = `Kelas ${siswa.kelas}`;
+    ctx.font = '600 13px Inter, sans-serif';
+    const badgeWidth = ctx.measureText(badgeText).width + 28;
+    const badgeX = (cardWidth - badgeWidth) / 2;
+    const badgeY = infoY + 44;
+    ctx.fillStyle = '#EBF3FB';
+    ctx.beginPath();
+    ctx.roundRect(badgeX, badgeY, badgeWidth, 28, 14);
+    ctx.fill();
+    ctx.fillStyle = '#4A90D9';
+    ctx.textAlign = 'center';
+    ctx.fillText(badgeText, cardWidth / 2, badgeY + 19);
+
+    // --- Footer ---
+    const footerY = cardHeight - 32;
+    ctx.fillStyle = '#BDC3C7';
+    ctx.font = '400 10px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(`Tahun Ajaran ${siswa.tahun_ajaran || '2025/2026'}`, cardWidth / 2, footerY);
+
+    // --- Draw QR code onto canvas ---
+    const qrImg = new Image();
+    qrImg.onload = () => {
+      ctx.drawImage(qrImg, qrX, qrY, qrSize, qrSize);
       const a = document.createElement('a');
-      a.download = `QR_${siswa.nis}_${siswa.nama}.png`;
+      a.download = `Kartu_QR_${siswa.nis}_${siswa.nama}.png`;
       a.href = canvas.toDataURL('image/png');
       a.click();
     };
-    img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+    qrImg.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
   };
 
   const downloadTemplate = () => {
@@ -292,18 +393,39 @@ export default function DataSiswaPage() {
         </div>
       )}
 
-      {/* Modal QR Code */}
+      {/* Modal QR Code - Card Preview */}
       {showQR && (
         <div className="modal-overlay" onClick={() => setShowQR(null)}>
-          <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 380 }}>
-            <div className="modal-header"><h3>QR Code</h3><button className="btn btn-ghost btn-icon btn-sm" onClick={() => setShowQR(null)}><X size={18} /></button></div>
-            <div className="modal-body">
-              <div className="qr-display">
-                <QRCodeSVG id={`qr-${showQR.nis}`} value={showQR.nis} size={200} level="H" />
-                <h4>{showQR.nama}</h4>
-                <p style={{ color: 'var(--text-secondary)' }}>{showQR.kelas} • NIS: {showQR.nis}</p>
-                <button className="btn btn-primary" onClick={() => downloadQR(showQR)}><Download size={16} /> Download QR</button>
+          <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 420 }}>
+            <div className="modal-header"><h3>Kartu QR Siswa</h3><button className="btn btn-ghost btn-icon btn-sm" onClick={() => setShowQR(null)}><X size={18} /></button></div>
+            <div className="modal-body" style={{ padding: 0 }}>
+              <div className="qr-card-preview">
+                <div className="qr-card">
+                  <div className="qr-card-header">
+                    <span className="qr-card-subtitle">KARTU IDENTITAS SISWA</span>
+                    <span className="qr-card-school">SDN 128 Haurpancuh</span>
+                    <span className="qr-card-tagline">Sistem Absensi Digital</span>
+                  </div>
+                  <div className="qr-card-body">
+                    <div className="qr-card-qr-frame">
+                      <QRCodeSVG id={`qr-${showQR.nis}`} value={showQR.nis} size={180} level="H" />
+                    </div>
+                    <div className="qr-card-info">
+                      <h4 className="qr-card-name">{showQR.nama}</h4>
+                      <p className="qr-card-nis">NIS: {showQR.nis}</p>
+                      <span className="qr-card-kelas">Kelas {showQR.kelas}</span>
+                    </div>
+                  </div>
+                  <div className="qr-card-footer">
+                    Tahun Ajaran {showQR.tahun_ajaran || '2025/2026'}
+                  </div>
+                </div>
               </div>
+            </div>
+            <div className="modal-footer" style={{ justifyContent: 'center' }}>
+              <button className="btn btn-primary" onClick={() => downloadQR(showQR)} style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                <Download size={16} /> Download Kartu QR
+              </button>
             </div>
           </div>
         </div>

@@ -42,12 +42,13 @@
 }
 
 /* ---- Sidebar ---- */
+
 .sidebar {
   position: fixed;
   top: 0;
   left: 0;
+  bottom: 0; /* Menggantikan height: 100vh agar tidak terpotong browser toolbar */
   width: var(--sidebar-width);
-  height: 100vh;
   background: var(--bg-sidebar);
   color: var(--text-white);
   display: flex;
@@ -167,10 +168,19 @@
 .sidebar-footer {
   padding: var(--space-md);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: auto;
+  position: sticky;
+  bottom: 0;
+  background: var(--bg-sidebar);
+  z-index: 10;
 }
 
 .sidebar-link.logout-link {
   color: rgba(255, 255, 255, 0.5);
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding: 12px;
 }
 
 .sidebar-link.logout-link:hover {
