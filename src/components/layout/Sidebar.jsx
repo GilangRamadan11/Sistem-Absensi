@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import LogoutModal from '../common/LogoutModal';
-import logoSekolah from '../../assets/logo_sekolah.png';
+import logoSekolah from '../../assets/LogoSekolahHaurpancuh.jpg';
 import {
   LayoutDashboard,
   ScanLine,
