@@ -9,8 +9,34 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Helper function to get today's date string (YYYY-MM-DD)
-const getTodayStr = () => new Date().toISOString().split('T')[0];
+// Helper functions to get Jakarta (WIB / GMT+7) date & time components
+const getJakartaTime = (date = new Date()) => {
+  const formatter = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'Asia/Jakarta',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hourCycle: 'h23'
+  });
+  const parts = formatter.formatToParts(date);
+  const getVal = (type) => parts.find(p => p.type === type).value;
+  return {
+    year: getVal('year'),
+    month: getVal('month'),
+    day: getVal('day'),
+    hour: getVal('hour'),
+    minute: getVal('minute'),
+    second: getVal('second')
+  };
+};
+
+const getTodayStr = () => {
+  const t = getJakartaTime();
+  return `${t.year}-${t.month}-${t.day}`;
+};
 const bcrypt = require('bcryptjs');
 
 // ==========================================
@@ -216,8 +242,8 @@ app.post('/api/absensi', async (req, res) => {
     // Siapkan jam_masuk jika Hadir
     let jamMasuk = null;
     if (status === 'Hadir') {
-      const now = new Date();
-      jamMasuk = `0${now.getHours()}`.slice(-2) + ':' + `0${now.getMinutes()}`.slice(-2) + ':00';
+      const t = getJakartaTime();
+      jamMasuk = `${t.hour}:${t.minute}:${t.second}`;
     }
 
     try {
