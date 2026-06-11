@@ -2,11 +2,12 @@ import { createContext, useContext, useState, useCallback, useEffect } from 'rea
 import axios from 'axios';
 import { getTodayStr } from '../utils/dateUtils';
 import { useToast } from './ToastContext';
+import { API_URL } from '../utils/constants';
 
 const DataContext = createContext(null);
 
 const api = axios.create({
-  baseURL: '/api'
+  baseURL: API_URL
 });
 
 export function DataProvider({ children }) {

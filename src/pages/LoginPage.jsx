@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { GraduationCap, Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
+import logoSekolah from '../assets/logo_sekolah.png';
 
 export default function LoginPage() {
   const [username, setUsername] = useState('');
@@ -40,8 +41,8 @@ export default function LoginPage() {
     <div className="login-layout">
       <div className="login-card">
         <div className="login-logo">
-          <div className="login-logo-icon">
-            <GraduationCap size={36} color="white" />
+          <div className="login-logo-icon" style={{ background: 'transparent', boxShadow: 'none' }}>
+            <img src={logoSekolah} alt="Logo SDN 128" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
           </div>
           <h2>Sistem Absensi</h2>
           <p>SDN 128 Haurpancuh</p>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import LogoutModal from '../common/LogoutModal';
+import logoSekolah from '../../assets/logo_sekolah.png';
 import {
   LayoutDashboard,
   ScanLine,
@@ -10,7 +11,6 @@ import {
   CalendarDays,
   CalendarRange,
   LogOut,
-  GraduationCap,
 } from 'lucide-react';
 
 const menuItems = [
@@ -42,8 +42,8 @@ export default function Sidebar({ isOpen, onClose }) {
       <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
         {/* Brand */}
         <div className="sidebar-brand">
-          <div className="sidebar-brand-icon">
-            <GraduationCap size={24} color="white" />
+          <div className="sidebar-brand-icon" style={{ background: 'transparent', boxShadow: 'none' }}>
+            <img src={logoSekolah} alt="Logo SDN 128" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
           </div>
           <div className="sidebar-brand-text">
             <h3>SDN 128</h3>

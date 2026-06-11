@@ -19,6 +19,10 @@ export const STATUS_COLORS = {
   Alpha: 'alpha',
 };
 
+// URL API Backend. Ubah value ini saat akan ditaruh di server sekolah.
+// Contoh buat server lokal: 'https://192.168.1.100:5000/api'
+export const API_URL = import.meta.env.VITE_API_URL || '/api';
+
 export const HARI_SEKOLAH = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
 
 export const DUMMY_SISWA = [
@@ -86,7 +90,7 @@ function generateDummyAbsensi(siswaList) {
   }
 
   return absensi;
-}
+};
 
 export const DUMMY_ABSENSI = generateDummyAbsensi(DUMMY_SISWA);
 

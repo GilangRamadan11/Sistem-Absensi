@@ -13,8 +13,8 @@ export default function RekapBulananPage() {
   const { siswaList, getAbsensiRange } = useData();
   const now = new Date();
   const pad = (n) => n.toString().padStart(2, '0');
-  const firstDay = `${now.getFullYear()}-${pad(now.getMonth()+1)}-01`;
-  const lastDay = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate())}`;
+  const firstDay = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-01`;
+  const lastDay = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate())}`;
 
   const [startDate, setStartDate] = useState(firstDay);
   const [endDate, setEndDate] = useState(lastDay);
@@ -69,7 +69,10 @@ export default function RekapBulananPage() {
       Nama: r.nama, NIS: r.nis, Kelas: r.kelas, Hadir: r.hadir, Izin: r.izin,
       Sakit: r.sakit, Alpha: r.alpha, 'Hari Sekolah': r.schoolDays, 'Kehadiran (%)': r.persen + '%',
     }));
-    exportToExcel(data, `Rekap_Kehadiran_${startDate}_sd_${endDate}`);
+
+    const judulExcel = `Rekap Kehadiran Bulanan (Kelas: ${filterKelas || 'Semua Kelas'}) - ${startDate} s/d ${endDate}`;
+
+    exportToExcel(data, `Rekap_Kehadiran_${startDate}_sd_${endDate}`, 'Sheet1', judulExcel);
   };
 
   return (

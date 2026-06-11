@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useToast } from '../context/ToastContext';
 import { GraduationCap, Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
+import logoSekolah from '../assets/logo_sekolah.png';
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -13,7 +14,7 @@ export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  
+
   const navigate = useNavigate();
   const { addToast } = useToast();
 
@@ -29,7 +30,7 @@ export default function RegisterPage() {
     if (!nama || !email || !password || !confirmPassword) {
       return addToast('Semua field wajib diisi', 'error');
     }
-    
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return addToast('Format email tidak valid', 'error');
@@ -50,7 +51,7 @@ export default function RegisterPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nama, email, password })
       });
-      
+
       let data;
       try {
         data = await response.json();
@@ -75,8 +76,8 @@ export default function RegisterPage() {
     <div className="login-layout">
       <div className="login-card">
         <div className="login-logo">
-          <div className="login-logo-icon">
-            <GraduationCap size={36} color="white" />
+          <div className="login-logo-icon" style={{ background: 'transparent', boxShadow: 'none' }}>
+            <img src={logoSekolah} alt="Logo SDN 128" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
           </div>
           <h2>Buat Akun Baru</h2>
           <p>Sistem Absensi SDN 128 Haurpancuh</p>
@@ -173,7 +174,7 @@ export default function RegisterPage() {
           >
             {loading ? 'Memproses...' : 'Daftar Sekarang'}
           </button>
-          
+
           <div style={{ textAlign: 'center', marginTop: 20, fontSize: '0.85rem', color: 'var(--text-light)' }}>
             Sudah punya akun? <Link to="/login" style={{ color: 'var(--primary)', fontWeight: '600', textDecoration: 'none' }}>Login di sini</Link>
           </div>

@@ -87,7 +87,7 @@ export default function ScanAbsensiPage() {
             </div>
           </div>
           <div className="card">
-            <div className="card-header"><h3 style={{ fontSize: '0.9rem' }}>Input Manual (Demo)</h3></div>
+            <div className="card-header"><h3 style={{ fontSize: '0.9rem' }}>Input Absensi Manual </h3></div>
             <div className="card-body">
               <form onSubmit={handleManualSubmit} style={{ display: 'flex', gap: 8 }}>
                 <input className="form-input" placeholder="Ketik NIS..." value={manualNis} onChange={(e) => setManualNis(e.target.value)} />

@@ -1,13 +1,14 @@
 const mysql = require('mysql2/promise');
+require('dotenv').config();
 
 async function initDB() {
   console.log('Menghubungkan ke MySQL...');
   try {
     // Koneksi ke server MySQL tanpa memilih database spesifik
     const connection = await mysql.createConnection({
-      host: 'localhost',
-      user: 'root',
-      password: '',
+      host: process.env.DB_HOST || 'localhost',
+      user: process.env.DB_USER || 'root',
+      password: process.env.DB_PASS || '',
     });
 
     console.log('Membuat database db_absensi_sd jika belum ada...');

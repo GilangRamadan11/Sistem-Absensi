@@ -61,7 +61,9 @@ export default function RekapMingguanPage() {
       row['Hadir'] = r.hadir; row['Izin'] = r.izin; row['Sakit'] = r.sakit; row['Alpha'] = r.alpha;
       return row;
     });
-    exportToExcel(data, `Rekap_Mingguan_${startDate}_${endDate}`);
+
+    const judulExcel = `Rekap Kehadiran Mingguan (Kelas: ${filterKelas || 'Semua Kelas'}) - ${startDate} s/d ${endDate}`;
+    exportToExcel(data, `Rekap_Mingguan_${startDate}_${endDate}`, 'Sheet1', judulExcel);
   };
 
   return (
